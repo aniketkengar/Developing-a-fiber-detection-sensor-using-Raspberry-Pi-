@@ -1,0 +1,32 @@
+import RPi.GPIO as GPIO
+import time
+
+# Set up GPIO mode
+GPIO.setmode(GPIO.BCM)
+
+# Define the GPIO pin connected to the sensor
+SENSOR_PIN = 17  # Example pin number
+
+# Set up the GPIO pin as an input
+GPIO.setup(SENSOR_PIN, GPIO.IN)
+
+def read_sensor():
+    # Read the sensor value (1 or 0)
+    return GPIO.input(SENSOR_PIN)
+
+def main():
+    try:
+        while True:
+            sensor_value = read_sensor()
+            if sensor_value == 1:
+                print("Fiber detected")
+            else:
+                print("No fiber detected")
+            time.sleep(1)  # Adjust the delay as needed
+    except KeyboardInterrupt:
+        print("Exiting program")
+    finally:
+        GPIO.cleanup()
+
+if __name__ == "__main__":
+    main()
